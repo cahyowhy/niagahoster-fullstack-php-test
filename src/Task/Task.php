@@ -30,7 +30,12 @@ class Task
         }
 
         $queryString = "CREATE TABLE IF NOT EXISTS $tableName ( ";
-        if ($useIdPrimary) $queryString .= "id INT NOT NULL AUTO_INCREMENT, ";
+        if ($useIdPrimary) {
+            // $queryString .= "id INT NOT NULL AUTO_INCREMENT, ";
+            
+            // for heroku
+            $queryString .= "id SERIAL PRIMARY KEY, ";
+        }
 
         foreach ($fields as $key => $arrValue) {
             if (empty($arrValue['type'])) {
@@ -42,11 +47,18 @@ class Task
 
             if (!empty($arrValue['length'])) $queryString .= "(" . $arrValue['length'] . ")";
             if (!empty($arrValue['mustnotnull'])) $queryString .= " NOT NULL";
-            $queryString .= ", ";
+            // $queryString .= ", ";
+
+            // for heroku
+            $queryString .= ",";
         }
 
+        // for heroku
+        $queryString = rtrim($queryString, ",");
+
         if (!empty($queryString)) {
-            if ($useIdPrimary) $queryString .= "PRIMARY KEY (id)";
+            // for non heroku
+            // if ($useIdPrimary) $queryString .= "PRIMARY KEY (id)";
             $queryString .= " )";
 
             try {
