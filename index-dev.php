@@ -1,5 +1,4 @@
 <?php
-// use this file if you want to cache the twig file on prod
 require_once __DIR__ . '/vendor/autoload.php';
 
 use NiagahosterTest\Core\Router;
@@ -15,9 +14,9 @@ $dotenv->load();
 $router = new Router($_SERVER);
 
 $loader = new FilesystemLoader(__DIR__ . '/templates');
-$twig = new Environment($loader, [
+$twig = new Environment($loader/* //use this on prod , [
     'cache' => __DIR__ . '/twig-cache',
-]);
+] */);
 
 $router->addRoute('/', 'GET', function () use ($twig) {
     $index = new IndexController($twig);
