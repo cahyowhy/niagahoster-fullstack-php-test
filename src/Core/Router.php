@@ -16,8 +16,12 @@ class Router
     public function __construct($request)
     {
         $this->path = $request['REQUEST_URI'];
-        if (isset($request['QUERY_STRING'])) {
-            $this->path = str_replace($this->path, '', $request['QUERY_STRING']);
+        if (!empty($request['QUERY_STRING'])) {
+            $this->path = str_replace($request['QUERY_STRING'], '', $this->path);
+
+            if (strpos($this->path, '?')) {
+                $this->path = str_replace('?', '', $this->path);
+            }
         }
 
         $this->method = basename($request['REQUEST_METHOD']);

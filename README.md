@@ -8,6 +8,7 @@
     ```bash
     composer dump-autoload && composer i
     ```
+* creata database that you define from .env file
 * run table migration with command
     ```bash
     php index-task.php
