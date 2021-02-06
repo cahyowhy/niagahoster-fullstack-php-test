@@ -18,7 +18,7 @@ class DatabaseConnection
             try {
                 $dbopts = parse_url(getenv('DATABASE_URL'));
 
-                $db_name = $dbopts['DB_NAME'];
+                $db_name = ltrim($dbopts["path"], '/');
                 $db_host = $dbopts['host'];
                 $db_user = $dbopts['user'];
                 $db_port = $dbopts['port'];
